@@ -20,6 +20,7 @@ app.get("*", function(req, res) {
 
 app.listen(port, function(err) {
     if (err) {
+        /* eslint-disable no-console */
         console.log(err);
     } else {
         open(`http://localhost:${port}`);

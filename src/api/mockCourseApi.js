@@ -1,4 +1,4 @@
-import delay from "./delay";
+import delay from './delay';
 
 // This file mocks a web API by working with the hard-coded data below.
 // It uses setTimeout to simulate the delay of an AJAX call.
@@ -47,12 +47,12 @@ const courses = [
 ];
 
 function replaceAll(str, find, replace) {
-  return str.replace(new RegExp(find, "g"), replace);
+  return str.replace(new RegExp(find, 'g'), replace);
 }
 
 //This would be performed on the server in a real app. Just stubbing in.
 const generateId = (course) => {
-  return replaceAll(course.title, " ", "-");
+  return replaceAll(course.title, ' ', '-');
 };
 
 class CourseApi {
@@ -65,6 +65,8 @@ class CourseApi {
   }
 
   static saveCourse(course) {
+    // clone to avoid mutating reference passed in.
+    course = Object.assign({}, course);
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         // Simulate server-side validation
@@ -78,14 +80,15 @@ class CourseApi {
           courses.splice(existingCourseIndex, 1, course);
         } else {
           //Just simulating creation here.
-          //The server would generate ids and watchHref"s for new courses in a real app.
+          //The server would generate ids and watchHref's for new courses in a real app.
           //Cloning so copy returned is passed by value rather than by reference.
           course.id = generateId(course);
           course.watchHref = `http://www.pluralsight.com/courses/${course.id}`;
           courses.push(course);
         }
 
-        resolve(Object.assign({}, course));
+        // Just return here, since cloning at the beginning of the function instead.
+        resolve(course);
       }, delay);
     });
   }
@@ -93,9 +96,8 @@ class CourseApi {
   static deleteCourse(courseId) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const indexOfCourseToDelete = courses.findIndex(course => {
-          course.courseId == courseId;
-        });
+        // Bug fix for issue #6 - Now returns since return is implied on arrow funcs without braces.
+        const indexOfCourseToDelete = courses.findIndex(course => course.courseId == courseId );
         courses.splice(indexOfCourseToDelete, 1);
         resolve();
       }, delay);
