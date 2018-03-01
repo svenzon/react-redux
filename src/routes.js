@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router";
 import HomePage from "./components/home/HomePage";
 import AboutPage from "./components/about/AboutPage";
 import CoursesPage from "./components/course/CoursesPage";
+import ManageCoursePage from "./components/course/ManageCoursePage";
 //import AuthorsPage from "./components/author/AuthorsPage";
 
 const Routes = () => (
@@ -11,6 +12,7 @@ const Routes = () => (
             <Route exact path="/" component={HomePage}/>
             <Route path="/about" component={AboutPage} />
             <Route path="/courses" component={CoursesPage}/>
+            <Route path="/course/:id" component={ManageCoursePage}/>
             {/* <Route path="/authors" component={AuthorsPage}/> */}
         </Switch>
     </div>
