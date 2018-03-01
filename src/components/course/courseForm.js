@@ -39,6 +39,14 @@ const CourseForm = ({course, allAuthors, onSave, onChange, loading, errors}) => 
                 onChange={onChange}
                 error={errors.length}
             />
+
+            <input
+                type="submit"
+                disabled={loading}
+                className="btn btn-primary"
+                value={loading ? "Saving..." : "Save"}
+                onClick={onSave}
+            />
         </form>
     );
 };
